@@ -1,0 +1,11 @@
+---
+  development:
+    foo: Foo
+    bar: Bar
+  test:
+    foo: "Test Foo"
+    bar: "Test Bar"
+  production:
+    foo: "Production Foo"
+    bar: "Production Bar"
+...
