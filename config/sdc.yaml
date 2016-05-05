@@ -2,10 +2,10 @@
   :development:
     :redis:
       :urls: 
-        - redis://localhost:6379
+        - redis://localhost:6379/0
   :production:
     :redis:
       :urls: 
-        - redis://sensu150vip.tuenti.int:6379
-        - redis://sensu160vip.tuenti.int:6379
-        - redis://sensumiavip.tuenti.int:6379
+        - redis://sensu150vip.tuenti.int:6379/0
+        - redis://sensu160vip.tuenti.int:6379/0
+        - redis://sensumiavip.tuenti.int:6379/0

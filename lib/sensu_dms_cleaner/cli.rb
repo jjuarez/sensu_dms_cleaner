@@ -1,5 +1,7 @@
 # encoding:UTF-8
 require 'thor'
+require 'redis'
+require 'sensu_dms_cleaner/version'
 require 'sensu_dms_cleaner/config'
 
 module SensuDmsCleaner
@@ -15,14 +17,27 @@ module SensuDmsCleaner
 			type:    :string,
       aliases: '-C',
       desc:    'The config file'
+    option :environment,
+      required: false,
+      type:     :symbol,
+      aliases:  '-e',
+      defaul:   :development,
+      desc:    'The environment'
     option :host,
       required: true,
       type:     :string,
       aliases:  '-h',
       desc:     'The host'
+    option :check,
+      required: true,
+      type:     :string,
+      aliases:  '-c',
+      desc:     'The check'
     def show
-      Config.configure(options[:config])
-      puts Config.to_h.inspect
+      Config.configure(options[:config], { environment: options[:environment] })[:urls].each do |url|
+				redis = Redis.new(url: url)
+        redis.get("*:#{options[:host]}:#{options[:check]}")
+      end
     end
 
     long_desc <<-LONGDESC
@@ -36,6 +51,12 @@ module SensuDmsCleaner
 			type:    :string,
       aliases: '-C',
       desc:    'The config file'
+    option :environment,
+      required: false,
+      type:     :symbol,
+      aliases:  '-e',
+      defaul:   :development,
+      desc:    'The environment'
     option :host,
       required: true,
       type:     :string,
@@ -48,7 +69,11 @@ module SensuDmsCleaner
       desc:     'The check'
     def delete
       Config.configure(options[:config])
-      puts Config.to_h.inspect
+    end
+    
+    desc 'version', 'Shows the version of the application'
+    def version
+      puts "#{$0} version: #{::SensuDmsCleaner::VERSION}" 
     end
   end
 end

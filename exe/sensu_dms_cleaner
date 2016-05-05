@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+begin
+  lib = File.expand_path("../../lib", __FILE__)
+  $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+rescue =>e
+  fail("Can not manage LOAD_PATH properly (#{e.message})")
+end
+
+require 'sensu_dms_cleaner'
+
+##
+# ::main::
+SensuDmsCleaner::CLI.start
