@@ -1,8 +1,8 @@
 # encoding:UTF-8
 require 'thor'
 require 'redis'
+require 'micro_config'
 require 'sensu_dms_cleaner/version'
-require 'sensu_dms_cleaner/config'
 
 module SensuDmsCleaner
   #
@@ -41,9 +41,7 @@ module SensuDmsCleaner
     end
 
     long_desc <<-LONGDESC
-
       This is anoher long description for the command
-
     LONGDESC
     desc 'delete', 'Deletes all the stuff related with a check'
 	  option :config,
